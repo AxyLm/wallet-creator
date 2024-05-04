@@ -1,11 +1,15 @@
 import { Button } from '@/app/components/ui/button'
 import * as bip39 from 'bip39'
+import * as bip32 from 'bip32'
 import { ethers } from 'ethers'
 import { arrayify, concat, hexDataSlice, keccak256 } from 'ethers/lib/utils'
-
+import { Separator } from '@/app/components/ui/separator'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import bitcoin from 'bitcoinjs-lib'
+import BIP32Factory from 'bip32'
+import * as ecc from 'tiny-secp256k1'
 
 import {
   Form,
@@ -20,9 +24,6 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/app/comp
 import { Input } from '@/app/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select'
 import copy from 'copy-to-clipboard'
-import { client, server } from '@passwordless-id/webauthn'
-
-import { Task01Icon } from '@hugeicons/react-pro'
 import { SVGProps } from 'react'
 
 const map = {
@@ -58,7 +59,6 @@ function EosIconsLoading(props: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
 
 function Main() {
   const [seed, setSeed] = useState<string>('')
@@ -154,14 +154,14 @@ function Main() {
                               <path
                                 d="M16.5 17.5L18 15.75H16.1407C15.0928 15.75 14.5688 15.75 14.1267 15.5281C13.6845 15.3063 13.3938 14.8976 12.8125 14.0801L9.85413 9.91987C9.27285 9.10244 8.9822 8.69372 8.54002 8.47186C8.09783 8.25 7.57386 8.25 6.52593 8.25H6M16.5 6.5L18 8.25H16.1407C15.0928 8.25 14.5688 8.25 14.1267 8.47186C13.6845 8.69372 13.3938 9.10244 12.8125 9.91987M6 15.75H6.52593C7.57386 15.75 8.09783 15.75 8.54001 15.5281C8.9822 15.3063 9.27285 14.8976 9.85413 14.0801"
                                 stroke="currentColor"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               />
                               <path
                                 d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
                                 stroke="currentColor"
-                                stroke-width="1.5"
+                                strokeWidth="1.5"
                               />
                             </svg>
                           )}
@@ -198,7 +198,7 @@ function Main() {
               )}
             />
             <div className="mt-4">
-              <Button type="submit">
+              <Button type="submit" disabled={createLoading}>
                 <span>Create</span>
               </Button>
             </div>
@@ -229,10 +229,12 @@ function Main() {
             <div className="w-full text-center h-38">
               <CopyMnemonic mnemonic={mnemonic} />
             </div>
+            <div className="w-full h-38">
+              <AddressGrid mnemonic={mnemonic} />
+            </div>
           </>
         )}
-
-        <hr className="w-full my-4" />
+        <Separator className="my-4" />
         <div className="text-left">
           <ul className="list-disc list-inside ">
             <li>
@@ -256,6 +258,62 @@ function MnemonicGrid({ mnemonic }: { mnemonic: string[] }) {
         </div>
       ))}
     </div>
+  )
+}
+
+function AddressGrid({ mnemonic, path }: { mnemonic: string[]; path?: string }) {
+  const [evm, setEvm] = useState<string>('')
+  const [btc, setBtc] = useState<string>('')
+
+  const [_mnemonic, sedMnemonic] = useState<string>()
+
+  if (!mnemonic.length) return null
+  useEffect(() => {
+    const _mnemonic = mnemonic.join(' ')
+    const _path = path || "m/44'/60'/0'/0/0"
+
+    if (mnemonic) {
+      try {
+        const evmWallet = ethers.Wallet.fromMnemonic(_mnemonic, _path)
+        const evm = evmWallet.address
+        setEvm(evm)
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+
+    if (mnemonic) {
+      try {
+        const bip32 = BIP32Factory(ecc)
+        const seed = bip39.mnemonicToSeedSync(_mnemonic)
+        const root = bip32.fromSeed(seed)
+        const child = root.derivePath(_path)
+        const { address: btcAddress } = bitcoin.payments.p2pkh({ pubkey: child.publicKey })
+        btcAddress && setBtc(btcAddress)
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+  }, [mnemonic])
+
+  return (
+    <>
+      <ul className="list-disc list-inside ">
+        {evm && (
+          <li>
+            <span>EVM </span>
+            <span>{evm}</span>
+          </li>
+        )}
+
+        {btc && (
+          <li>
+            <span>BTC </span>
+            <span>{btc}</span>
+          </li>
+        )}
+      </ul>
+    </>
   )
 }
 
