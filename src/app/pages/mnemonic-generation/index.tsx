@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ta
 import Create from '@/app/pages/mnemonic-generation/create'
 export default function TabsDemo() {
   return (
-    <div className="flex items-center justify-center mt-12 mb-8">
+    <div className="flex items-center justify-center px-10 mt-12 mb-8">
       <Tabs defaultValue="create" className="w-[400px] sm:w-[400px] md:w-[600px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="create">Create</TabsTrigger>
