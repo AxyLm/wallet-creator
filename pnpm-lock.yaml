@@ -65,6 +65,12 @@ dependencies:
   react-hook-form:
     specifier: ^7.51.3
     version: 7.51.3(react@18.2.0)
+  react-qr-code:
+    specifier: ^2.0.15
+    version: 2.0.15(react@18.2.0)
+  react-router-dom:
+    specifier: ^6.24.1
+    version: 6.24.1(react-dom@18.2.0)(react@18.2.0)
   sonner:
     specifier: ^1.4.41
     version: 1.4.41(react-dom@18.2.0)(react@18.2.0)
@@ -4033,6 +4039,11 @@ packages:
       invariant: 2.2.4
       nullthrows: 1.1.1
       react-native: 0.73.7(@babel/core@7.24.4)(@babel/preset-env@7.24.4)(react@18.2.0)
+    dev: false
+
+  /@remix-run/router@1.17.1:
+    resolution: {integrity: sha512-mCOMec4BKd6BRGBZeSnGiIgwsbLGp3yhVqAD8H+PxiRNEHgDpZb8J1TnrSDlg97t0ySKMQJTHCWBCmBpSmkF6Q==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /@rollup/plugin-virtual@3.0.2:
@@ -10247,6 +10258,10 @@ packages:
       qrcode-generator: 1.4.4
     dev: false
 
+  /qr.js@0.0.0:
+    resolution: {integrity: sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==}
+    dev: false
+
   /qrcode-generator@1.4.4:
     resolution: {integrity: sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==}
     dev: false
@@ -10433,6 +10448,16 @@ packages:
       - utf-8-validate
     dev: false
 
+  /react-qr-code@2.0.15(react@18.2.0):
+    resolution: {integrity: sha512-MkZcjEXqVKqXEIMVE0mbcGgDpkfSdd8zhuzXEl9QzYeNcw8Hq2oVIzDLWuZN2PQBwM5PWjc2S31K8Q1UbcFMfw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      prop-types: 15.8.1
+      qr.js: 0.0.0
+      react: 18.2.0
+    dev: false
+
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
@@ -10489,6 +10514,29 @@ packages:
       tslib: 2.6.2
       use-callback-ref: 1.3.2(@types/react@18.2.79)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.79)(react@18.2.0)
+    dev: false
+
+  /react-router-dom@6.24.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-U19KtXqooqw967Vw0Qcn5cOvrX5Ejo9ORmOtJMzYWtCT4/WOfFLIZGGsVLxcd9UkBO0mSTZtXqhZBsWlHr7+Sg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.17.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-router: 6.24.1(react@18.2.0)
+    dev: false
+
+  /react-router@6.24.1(react@18.2.0):
+    resolution: {integrity: sha512-PTXFXGK2pyXpHzVo3rR9H7ip4lSPZZc0bHG5CARmj65fTT6qG7sTngmb6lcYu1gf3y/8KxORoy9yn59pGpCnpg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.17.1
+      react: 18.2.0
     dev: false
 
   /react-shallow-renderer@16.15.0(react@18.2.0):

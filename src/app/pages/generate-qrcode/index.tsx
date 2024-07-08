@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs'
-import Create from '@/app/pages/mnemonic-generation/create'
+import Create from './create'
 export default function TabsDemo() {
   return (
     <div className="flex items-center justify-center mt-12 mb-8">
