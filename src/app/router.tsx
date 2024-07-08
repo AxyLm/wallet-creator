@@ -15,10 +15,9 @@ const router = createBrowserRouter([
       {
         path: 'qr',
         Component: QrCode,
-
       },
       {
-        path: 'deferred',
+        path: '*',
         Component: MnemonicGeneration,
       },
     ],

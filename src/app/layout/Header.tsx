@@ -7,8 +7,10 @@ export const Header = ({ action }: { action?: ReactNode }) => {
   return (
     <div className="header sticky inset-x-0 top-0 z-20 flex items-center justify-between border-b border-b-white/5 px-4 sm:h-20 sm:px-7.5 xl:px-10">
       <div className="flex items-center font-bold cursor-pointer">
-        <BitcoinWalletIcon className="w-10 h-10 mr-10" />
-        <div className='flex gap-5'>
+        <Link to="/">
+          <BitcoinWalletIcon className="w-10 h-10 mr-10" />
+        </Link>
+        <div className="flex gap-5">
           <Link to="/">
             <span className="font-bold text-black text-1xl hover:underline"> Wallet </span>
           </Link>
@@ -16,7 +18,6 @@ export const Header = ({ action }: { action?: ReactNode }) => {
             <span className="font-bold text-black text-1xl hover:underline"> QRCode </span>
           </Link>
         </div>
-
       </div>
       <div className="flex items-center">
         <a href="https://github.com/AxyLm/wallet-creator" target="_blank" rel="noopener">
