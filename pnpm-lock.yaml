@@ -69,7 +69,7 @@ dependencies:
     specifier: ^2.0.15
     version: 2.0.15(react@18.2.0)
   react-router-dom:
-    specifier: ^6.24.1
+    specifier: ^6.15.0
     version: 6.24.1(react-dom@18.2.0)(react@18.2.0)
   sonner:
     specifier: ^1.4.41
